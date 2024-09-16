@@ -1,38 +1,22 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { InvoiceState, invoiceAdapter } from './board.entity';
+import { BoardState, adapter } from './board.entity';
 
-export const selectInvoiceState = createFeatureSelector<InvoiceState>('invoices');
+export const selectBoardState = createFeatureSelector<BoardState>('boards');
 
-const { selectIds, selectEntities, selectAll, selectTotal } = invoiceAdapter.getSelectors(selectInvoiceState);
+export const {
+  selectIds: selectBoardIds,
+  selectEntities: selectBoardEntities,
+  selectAll: selectAllBoards,
+  selectTotal: selectBoardTotal,
+} = adapter.getSelectors(selectBoardState);
 
-// export const selectAllInvoicesArray = createSelector(
-//   selectInvoiceState,
-//   (state: InvoiceState) => state.invoices
-// );
-
-export const selectAllInvoices = selectAll;
-
-export const selectInvoiceTotal = selectTotal;
-
-export const selectInvoiceEntities = selectEntities;
-
-export const selectInvoiceIds = selectIds;
-
-export const selectInvoiceById = (invoiceId: string) =>
-  createSelector(selectInvoiceEntities, (entities) => entities[invoiceId]);
-
-export const selectSelectedInvoiceId = createSelector(
-  selectInvoiceState,
-  (state: InvoiceState) => state.selectedInvoiceId
+export const selectSelectedBoardId = createSelector(
+  selectBoardState,
+  (state: BoardState) => state.selectedBoardId
 );
 
-export const selectSelectedInvoice = createSelector(
-  selectInvoiceEntities,
-  selectSelectedInvoiceId,
-  (entities, selectedInvoiceId) => selectedInvoiceId ? entities[selectedInvoiceId] : null
-);
-
-export const selectTheme = createSelector(
-  selectInvoiceState,
-  (state: InvoiceState) => state.theme
+export const selectSelectedBoard = createSelector(
+  selectBoardEntities,
+  selectSelectedBoardId,
+  (entities, selectedId) => selectedId && entities[selectedId]
 );

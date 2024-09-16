@@ -7,8 +7,8 @@ import { provideState, provideStore } from '@ngrx/store';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { invoiceReducer } from './shared/state/board.reducer';
-import { InvoiceEffects } from './shared/state/board.effects';
+import { BoardEffects } from './shared/state/board.effects';
+import { boardReducer } from './shared/state/board.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,9 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideState({
       name: 'boards',
-      reducer: invoiceReducer,
+      reducer: boardReducer,
     }),
-    provideEffects(InvoiceEffects),
+    provideEffects(BoardEffects),
     provideStoreDevtools({maxAge:25, logOnly: false}),
     provideAnimationsAsync()
   ]

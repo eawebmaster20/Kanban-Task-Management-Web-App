@@ -1,31 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
-import * as InvoiceActions from './board.actions';
-import { initialBoardState, invoiceAdapter } from './board.entity';
+import * as BoardActions from './board.actions';
+import { initialBoardState, boardAdaptor } from './board.entity';
 
-export const invoiceReducer = createReducer(
+export const boardReducer = createReducer(
   initialBoardState,
-  on(InvoiceActions.fetchInvoicesSuccess, (state, { invoices }) =>
-    invoiceAdapter.setAll(invoices, state)
-  ),
-  on(InvoiceActions.addInvoice, (state, { invoice }) =>
-    invoiceAdapter.addOne(invoice, state)
-  ),
-  on(InvoiceActions.deleteInvoice, (state,  { id }) =>
-    invoiceAdapter.removeOne(id, state)
-  ),
-  on(InvoiceActions.updateInvoice, (state, { update }) =>
-    invoiceAdapter.updateOne(update, state)
-  ),
-  on(InvoiceActions.setSelectedInvoice, (state, { invoiceId }) => ({
-    ...state,
-    selectedInvoiceId: invoiceId,
-  })),
-  on(InvoiceActions.clearSelectedInvoice, (state) => ({
-    ...state,
-    selectedInvoiceId: null,
-  })),
-  on(InvoiceActions.setTheme, (state, { theme }) => ({
-    ...state,
-    theme,
-  }))
+  on(BoardActions.fetchBoardsSuccess, (state, { boards }) => boardAdaptor.setAll(boards, state)),
+  on(BoardActions.addBoard, (state, { board }) => boardAdaptor.addOne(board, state)),
+  on(BoardActions.updateBoard, (state, { board }) => boardAdaptor.updateOne({ id: board.id, changes: board }, state)),
+  on(BoardActions.deleteBoard, (state, { id }) => boardAdaptor.removeOne(id, state))
 );
+
+export const { selectAll, selectEntities } = boardAdaptor.getSelectors();
+

@@ -1,42 +1,10 @@
+
 import { createAction, props } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
 import { IBoard } from '../models/board';
 
-export const fetchInvoices = createAction('[Invoice API] Fetch Invoices');
-
-export const fetchInvoicesSuccess = createAction(
-  '[Invoice API] Fetch Invoices Success',
-  props<{ invoices: IBoard[] }>()
-);
-
-export const fetchInvoicesFailure = createAction(
-  '[Invoice API] Fetch Invoices Failure',
-  props<{ error: any }>()
-);
-
-export const updateInvoice = createAction(
-  '[Invoice] Update Invoice',
-  props<{ update: Update<IBoard> }>()
-);
-
-export const deleteInvoice = createAction(
-  '[Invoice] Delete Invoice',
-  props<{ id: string }>()
-);
-
-export const addInvoice = createAction(
-  '[Invoice] Add Invoice',
-  props<{ invoice: IBoard }>()
-);
-
-export const setSelectedInvoice = createAction(
-  '[Invoice] Set Selected Invoice',
-  props<{ invoiceId: string }>()
-);
-
-export const clearSelectedInvoice = createAction('[Invoice] Clear Selected Invoice');
-
-export const setTheme = createAction(
-  '[Theme] Set Theme',
-  props<{ theme: string }>()
-);
+export const fetchBoardsSuccess = createAction('[Board/API] Load Boards', props<{ boards: IBoard[] }>());
+export const fetchBoardsFailure = createAction('[Board/API] Load failed');
+export const addBoard = createAction('[Board/API] Add Board', props<{ board: IBoard }>());
+export const updateBoard = createAction('[Board/API] Update Board', props<{ board: IBoard }>());
+export const deleteBoard = createAction('[Board/API] Delete Board', props<{ id: string }>());
+export const fetchBoards = createAction('[Invoice API] Fetch boards');
