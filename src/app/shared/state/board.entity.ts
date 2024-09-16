@@ -1,16 +1,11 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Invoice } from '../models/board';
+import { IBoard } from '../models/board';
 
-export interface InvoiceState extends EntityState<Invoice> {
-  selectedInvoiceId: string | null;
-  theme: string;
-  // invoices: Invoice[];
+export interface BoardState extends EntityState<IBoard> {
 }
 
-export const invoiceAdapter: EntityAdapter<Invoice> = createEntityAdapter<Invoice>();
+export const invoiceAdapter: EntityAdapter<IBoard> = createEntityAdapter<IBoard>();
 
-export const initialInvoiceState: InvoiceState = invoiceAdapter.getInitialState({
-  selectedInvoiceId: 'RG0314',
-  theme: 'light', 
-  // invoices: []
+export const initialBoardState: BoardState = invoiceAdapter.getInitialState({
+
 });

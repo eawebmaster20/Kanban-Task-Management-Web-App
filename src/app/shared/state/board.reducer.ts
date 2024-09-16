@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import * as InvoiceActions from './board.actions';
-import { initialInvoiceState, invoiceAdapter } from './board.entity';
+import { initialBoardState, invoiceAdapter } from './board.entity';
 
 export const invoiceReducer = createReducer(
-  initialInvoiceState,
+  initialBoardState,
   on(InvoiceActions.fetchInvoicesSuccess, (state, { invoices }) =>
     invoiceAdapter.setAll(invoices, state)
   ),

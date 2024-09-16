@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideHttpClient(withFetch()),
     provideState({
-      name: 'invoices',
+      name: 'boards',
       reducer: invoiceReducer,
     }),
     provideEffects(InvoiceEffects),

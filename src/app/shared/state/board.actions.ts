@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { Invoice } from '../models/board';
+import { IBoard } from '../models/board';
 
 export const fetchInvoices = createAction('[Invoice API] Fetch Invoices');
 
 export const fetchInvoicesSuccess = createAction(
   '[Invoice API] Fetch Invoices Success',
-  props<{ invoices: Invoice[] }>()
+  props<{ invoices: IBoard[] }>()
 );
 
 export const fetchInvoicesFailure = createAction(
@@ -16,7 +16,7 @@ export const fetchInvoicesFailure = createAction(
 
 export const updateInvoice = createAction(
   '[Invoice] Update Invoice',
-  props<{ update: Update<Invoice> }>()
+  props<{ update: Update<IBoard> }>()
 );
 
 export const deleteInvoice = createAction(
@@ -26,7 +26,7 @@ export const deleteInvoice = createAction(
 
 export const addInvoice = createAction(
   '[Invoice] Add Invoice',
-  props<{ invoice: Invoice }>()
+  props<{ invoice: IBoard }>()
 );
 
 export const setSelectedInvoice = createAction(

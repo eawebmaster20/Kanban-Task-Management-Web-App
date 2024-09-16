@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import * as InvoiceActions from './board.actions';
-import { Invoice } from '../models/board';
+import { IBoard } from '../models/board';
 import { ApiService } from '../services/api/api.service';
 
 
@@ -22,14 +22,14 @@ export class InvoiceEffects {
         const localStorageInvoices = localStorage.getItem('invoices');
 
         if (localStorageInvoices) {
-          const invoices: Invoice[] = JSON.parse(localStorageInvoices);
+          const invoices: IBoard[] = JSON.parse(localStorageInvoices);
           return of(InvoiceActions.fetchInvoicesSuccess({ invoices }));
         } else {
           return this.storeService.fetchInvoices().pipe(
-            tap((invoices: Invoice[]) => {
+            tap((invoices: IBoard[]) => {
               localStorage.setItem('invoices', JSON.stringify(invoices));
             }),
-            map((invoices: Invoice[]) =>
+            map((invoices: IBoard[]) =>
             {
               localStorage.setItem('invoices', JSON.stringify(invoices));
               return InvoiceActions.fetchInvoicesSuccess({ invoices })
