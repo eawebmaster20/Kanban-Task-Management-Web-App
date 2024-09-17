@@ -1,0 +1,22 @@
+@mixin theme($theme) 
+  @if $theme == light 
+    --header-bg: rgba(72, 159, 165, 0.5)
+    --header-color: #FFFFFF
+    --main-bg: #FFFFFF
+    --main-color: #2F4C58
+    --footer-bg: #489FA5
+    --footer-color: #FFFFFF
+    --theme-toggler-bg: #FFFFFF
+    --theme-toggler-handle-color: var(--footer-bg)
+  
+  @else if $theme == dark 
+    --header-bg: #489FA5
+    --header-color: #FFFFFF
+    --main-bg: #2F4C58
+    --main-color: #FFFFFF
+    --footer-bg: #2C2C2C
+    --footer-color: #FFFFFF
+    --theme-toggler-bg: var(--footer-bg)
+    --theme-toggler-handle-color: var(--footer-color)
+  
+
