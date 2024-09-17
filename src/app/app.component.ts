@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { ModalDirective } from './shared/directives/modal.directive';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +24,11 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     MatIconModule,
-    InputSwitchModule
+    InputSwitchModule,
+    HeaderComponent,
+    ModalDirective
   ],
+  
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })

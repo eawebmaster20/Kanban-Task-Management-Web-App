@@ -1,5 +1,7 @@
-<div [class]="checked?'dark-theme':'light-theme'" class="parent">
-  <div class="header"> </div>
+<div appModal [class]="checked?'dark-theme':'light-theme'" class="parent">
+  <div class="header">
+      <app-header/>
+  </div>
   <div class="content">
     <mat-drawer-container class="example-container" hasBackdrop="false">
       <mat-drawer #drawer mode="side" opened="true">
@@ -53,11 +55,12 @@
           </div>
         </div>        
       </mat-drawer>
-      <mat-drawer-content>
-        <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button>
+      <mat-drawer-content class="content-container">
+        <button [class]="drawer.opened ? 'hide':'show'" mat-raised-button class="main-toggler" (click)="drawer.toggle()">
+          <mat-icon>visibility</mat-icon>
+        </button>
         <router-outlet />
       </mat-drawer-content>
     </mat-drawer-container>
-    
   </div>
   </div>
