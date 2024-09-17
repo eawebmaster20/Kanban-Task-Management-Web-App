@@ -1,0 +1,47 @@
+<div class="board" cdkDropListGroup>
+    @for (item of all; track $index) {
+        <div class="column example-container">
+            <div class="title">To do</div>
+            <div 
+            cdkDropList
+            [cdkDropListData]="item"
+            (cdkDropListDropped)="drop($event)"
+            class="task-list">
+                @for (todo of item; track $index) {
+                    <div cdkDrag class="card">
+                        {{todo}}
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+<!-- <div cdkDropListGroup>
+    <div class="example-container">
+      <h2>To do</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="todos"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        @for (item of todos; track item) {
+          <div class="example-box" cdkDrag>{{item}}</div>
+        }
+      </div>
+    </div>
+  
+    <div class="example-container">
+      <h2>Done</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="done"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        @for (item of done; track item) {
+          <div class="example-box" cdkDrag>{{item}}</div>
+        }
+      </div>
+    </div>
+  </div> -->
