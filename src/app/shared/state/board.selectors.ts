@@ -1,22 +1,22 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { BoardState, adapter } from './board.entity';
+import { State, boardAdaptor } from './board.entity';
 
-export const selectBoardState = createFeatureSelector<BoardState>('boards');
+export const selectBoardState = createFeatureSelector<State>('boards');
 
 export const {
   selectIds: selectBoardIds,
   selectEntities: selectBoardEntities,
   selectAll: selectAllBoards,
   selectTotal: selectBoardTotal,
-} = adapter.getSelectors(selectBoardState);
+} = boardAdaptor.getSelectors(selectBoardState);
 
 export const selectSelectedBoardId = createSelector(
   selectBoardState,
-  (state: BoardState) => state.selectedBoardId
+  (state: State) => state.ids
 );
 
 export const selectSelectedBoard = createSelector(
-  selectBoardEntities,
-  selectSelectedBoardId,
-  (entities, selectedId) => selectedId && entities[selectedId]
+  selectBoardState,
+  (state: State) => state.selectedBoard
 );
+

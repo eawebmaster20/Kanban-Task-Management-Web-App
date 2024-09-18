@@ -29,7 +29,11 @@ export class BoardEffects {
           return this.storeService.fetchBoards().pipe(
             map(res => res.boards.map((board) => ({
               ...board,
-              id: uuidv4()  
+              id: uuidv4(),
+              columns: board.columns.map(column => ({
+                ...column,
+                id: uuidv4()
+              }))
             }))), 
             tap((boards: IBoard[]) => {
               console.log('loading from api')
