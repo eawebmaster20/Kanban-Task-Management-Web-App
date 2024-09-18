@@ -1,47 +1,46 @@
 <div class="board" cdkDropListGroup>
-    @for (item of all; track $index) {
-        <div class="column example-container">
-            <div class="title">To do</div>
-            <div 
-            cdkDropList
-            [cdkDropListData]="item"
-            (cdkDropListDropped)="drop($event)"
-            class="task-list">
-                @for (todo of item; track $index) {
-                    <div cdkDrag class="card">
-                        {{todo}}
-                    </div>
-                }
+    @if (!!selectedBoard) {
+        @for (column of selectedBoard.columns; track $index) {
+            <div class="column">
+                <div class="title">
+                    <span class="title-color-ball" [style.Background]="colorList[$index]"></span>
+                    {{column.name}}
+                </div>
+                <div 
+                cdkDropList
+                (cdkDropListDropped)="dropStore($event)"
+                [cdkDropListData]="column.tasks"
+                class="task-list">
+                    @for (task of column.tasks; track $index) {
+                        <div cdkDrag class="card">
+                            <div class="card-title"> 
+                                {{task.title}} 
+                            </div> 
+                            <div class="card-count">
+                                {{countCompleted(task)}} of {{task.subtasks.length}} subtasks
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
+        }
+        <div class="column">
+            <div class="title"></div>
+            <button class="column-add-new">add new</button>
+        </div>
+    }
+    @else {
+        <div class="board-empty">
+            This board is empty. Create a new column to get started.
+            <button class="create-task-btn">
+                <mat-icon class="add-icon">
+                    <svg width="12" height="12" 
+                      xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"/>
+                  </svg>
+                </mat-icon>
+                  Create New Task
+            </button>
         </div>
     }
 </div>
-<!-- <div cdkDropListGroup>
-    <div class="example-container">
-      <h2>To do</h2>
-  
-      <div
-        cdkDropList
-        [cdkDropListData]="todos"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
-        @for (item of todos; track item) {
-          <div class="example-box" cdkDrag>{{item}}</div>
-        }
-      </div>
-    </div>
-  
-    <div class="example-container">
-      <h2>Done</h2>
-  
-      <div
-        cdkDropList
-        [cdkDropListData]="done"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
-        @for (item of done; track item) {
-          <div class="example-box" cdkDrag>{{item}}</div>
-        }
-      </div>
-    </div>
-  </div> -->

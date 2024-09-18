@@ -7,21 +7,37 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { AsyncPipe } from '@angular/common';
+import { IBoard, ITask } from '../../shared/models/board';
+import { Store } from '@ngrx/store';
+import { selectSelectedBoard } from '../../shared/state/board.selectors';
+import { getRandomColor } from '../../shared/utils/colorGenerator';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-board-renderer',
   standalone: true,
-  imports: [CdkDropListGroup, CdkDropList, CdkDrag],
+  imports: [CdkDropListGroup, CdkDropList, CdkDrag, AsyncPipe, MatIconModule],
   templateUrl: './board-renderer.component.html',
   styleUrl: './board-renderer.component.sass'
 })
 export class BoardRendererComponent {
-  todos = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  selectedBoard!: IBoard | null
+  controlBoard!: IBoard 
+  colorList:string[] =[]
+  constructor(public store:Store) {
+    this.store.select(selectSelectedBoard).subscribe((board) => {
+      console.log(board);
+      board?.columns.forEach(element => {
+        this.colorList.push(getRandomColor())
+      });
+      localStorage.setItem('selectedBoard', JSON.stringify(board));
+      this.selectedBoard =  board ? JSON.parse(localStorage.getItem('selectedBoard')!) : null;
+    });
+  }
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-  all = [this.todos, this.done]
 
-  drop(event: CdkDragDrop<string[]>) {
+  dropStore(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -32,6 +48,11 @@ export class BoardRendererComponent {
         event.currentIndex,
       );
     }
-    console.log(this.all);
   }
+
+  countCompleted(task:ITask):Number {
+    return task.subtasks.filter(subtask => subtask.isCompleted).length;
+  }
+
+   
 }
