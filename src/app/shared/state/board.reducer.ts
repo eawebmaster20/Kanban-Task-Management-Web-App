@@ -7,7 +7,16 @@ export const boardReducer = createReducer(
   on(BoardActions.fetchBoardsSuccess, (state, { boards }) => boardAdaptor.setAll(boards, state)),
   on(BoardActions.addBoard, (state, { board }) => boardAdaptor.addOne(board, state)),
   on(BoardActions.updateBoard, (state, { board }) => boardAdaptor.updateOne({ id: board.id, changes: board }, state)),
-  on(BoardActions.deleteBoard, (state, { id }) => boardAdaptor.removeOne(id, state))
+  on(BoardActions.deleteBoard, (state, { id }) => boardAdaptor.removeOne(id, state)),
+  on(BoardActions.selectBoard, (state, { board }) => ({
+    ...state,
+    selectedBoard: board
+  })),
+  on(BoardActions.clearSelectedBoard, state => ({
+    ...state,
+    selectedBoard: null
+  })),
+  
 );
 
 export const { selectAll, selectEntities } = boardAdaptor.getSelectors();

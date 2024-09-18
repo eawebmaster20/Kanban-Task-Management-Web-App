@@ -2,15 +2,18 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ApiService } from './shared/services/api/api.service';
-import { addBoard, deleteBoard, fetchBoards, updateBoard,  } from './shared/state/board.actions';
+import { addBoard, deleteBoard, fetchBoards, selectBoard, updateBoard,  } from './shared/state/board.actions';
 import { v4 as uuidv4 } from 'uuid'
 import { IBoard } from './shared/models/board';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { ModalDirective } from './shared/directives/modal.directive';
+import { selectAllBoards, selectSelectedBoard } from './shared/state/board.selectors';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +22,15 @@ import { FormsModule } from '@angular/forms';
     RouterOutlet, 
     MatSidenavModule,
     MatListModule,
+    AsyncPipe,
     CommonModule,
     FormsModule,
     MatIconModule,
-    InputSwitchModule
+    InputSwitchModule,
+    HeaderComponent,
+    ModalDirective
   ],
+  
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })
@@ -31,13 +38,17 @@ export class AppComponent {
   title = 'kanbanTaskManagement';
   boards = ['Platform Launch', 'Marketing Plan', 'Roadmap']
   board:IBoard = {id:uuidv4(),name:'test board name',columns:[]}
-  selectedBoard = 'Platform Launch'
   checked: boolean  = true
+  allStoreBoards = selectAllBoards
+  selectedBoard = selectSelectedBoard
   constructor(
-    private store:Store,
+    public store:Store,
     private apiService:ApiService,  
   ) {
       this.store.dispatch(fetchBoards());
+      // this.store.select(selectAllBoards).subscribe({
+      //   next:(res)=>console.log(res)
+      // })
   }
 
   toggleTheme(){
@@ -56,8 +67,9 @@ export class AppComponent {
     this.store.dispatch(deleteBoard({id:''}))
   }
 
-  selectBoard(boardName: string){
-    this.selectedBoard = boardName
-    console.log(boardName)
+  selectBoard(board: IBoard){
+    // this.selectedBoard = boardName
+    // console.log(board)
+    this.store.dispatch(selectBoard({board}));
   }
 }

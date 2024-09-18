@@ -1,0 +1,56 @@
+.header-parent
+    display: grid
+    grid-template-columns: 18.8rem 1fr
+    grid-template-rows: 1fr
+    height: 100%
+
+    .div1
+        grid-area: 1 / 1 / 2 / 2
+        display: flex
+        align-items: center
+        margin-left: 2rem
+        border-right: 1px solid #e4ebfa
+    .div2 
+        grid-area: 1 / 2 / 2 / 3
+        display: flex
+        align-items: center
+        justify-content: space-between
+        height: 100%
+        padding: 0 2rem
+
+        .actions
+            position: relative
+            display: flex
+            align-items: center
+
+      
+            #toggleModal
+                display: flex
+                align-items: center
+                justify-content: center
+                justify-content: end
+                cursor: pointer
+                color: gray
+                width: 3rem
+
+            .modal
+                position: absolute
+                top: 130%
+                right: 0
+                font-weight: 600
+                gap: 0.5rem
+                align-items: start
+                flex-direction: column
+                width: 12rem
+                background: white
+                padding: 1rem
+                border-radius: 8px
+                animation: fadeIn .3s ease
+                border: 1px gray
+                box-shadow: 0 0 8px #364e7e1a
+            
+                .edit
+                    color: #828fa3
+                    transition: opacity .2s ease
+                .delete
+                    color: #ea5555

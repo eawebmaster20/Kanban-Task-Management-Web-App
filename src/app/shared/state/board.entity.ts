@@ -3,6 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { IBoard } from '../models/board';
 
 export interface State extends EntityState<IBoard> {
+    selectedBoard: IBoard | null;
 }
 
 export const boardAdaptor: EntityAdapter<IBoard> = createEntityAdapter<IBoard>({
@@ -10,4 +11,6 @@ export const boardAdaptor: EntityAdapter<IBoard> = createEntityAdapter<IBoard>({
     sortComparer: (a: IBoard, b: IBoard) => a.name.localeCompare(b.name),
 });
 
-export const initialBoardState: State = boardAdaptor.getInitialState();
+export const initialBoardState: State = boardAdaptor.getInitialState({
+    selectedBoard: null,
+});
