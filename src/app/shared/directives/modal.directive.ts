@@ -11,10 +11,10 @@ export class ModalDirective {
     const target = event.target as HTMLElement;
     const targetId = target.id;
     if (targetId === 'toggleModal') {
-      console.log(this.host.showDropdown)
+      // console.log(this.host.showDropdown)
       return;
     }
-    console.log(target,this.host.showDropdown)
+    // console.log(target,this.host.showDropdown)
     this.host.showDropdown = this.host.showDropdown ? false : false;
   }
 }
