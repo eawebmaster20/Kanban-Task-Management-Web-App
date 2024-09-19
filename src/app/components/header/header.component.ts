@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { MenuModule } from 'primeng/menu';
-import { HostService } from '../../shared/services/host/host.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateBoardComponent } from '../modals/create-board/create-board.component';
+import { TaskModalComponent } from '../modals/task-modal/task-modal.component';
+import { DataService } from '../../shared/services/data/data.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,7 @@ import { CreateBoardComponent } from '../modals/create-board/create-board.compon
 
 export class HeaderComponent {
 
-constructor(public hostService:HostService,public dialog: MatDialog){}
+constructor(public hostService:DataService,public dialog: MatDialog){}
 
   toggleMenu() {
     console.log(this.hostService.showDropdown)
@@ -24,7 +24,7 @@ constructor(public hostService:HostService,public dialog: MatDialog){}
   }
   openDialog() {
     console.log('dialog open')
-    const dialogRef = this.dialog.open(CreateBoardComponent);
+    const dialogRef = this.dialog.open(TaskModalComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
