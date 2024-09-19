@@ -1,0 +1,33 @@
+<form [formGroup]="taskForm" (ngSubmit)="createTask()">
+  <h3>Create Task</h3>
+  
+  <label for="title">Task Title</label>
+  <input id="title" formControlName="title" placeholder="Task title" />
+
+  <label for="description">Task Description</label>
+  <textarea id="description" formControlName="description" placeholder="Task description"></textarea>
+
+  <label for="status">Status</label>
+  <select id="status" formControlName="columnId">
+    @for (column of selectedBoard.columns; track $index) {
+      <option [value]="column.id">{{ column.name }}</option>
+    }
+  </select>
+  <h4>Subtasks</h4>
+  <div formArrayName="subtasks">
+    @for (subtask of subtasks.controls; track $index) {
+        <div [formGroupName]="$index">
+          <label for="subtask-title">Subtask Title</label>
+          <input id="subtask-title" formControlName="title" placeholder="Subtask title" />
+          <label>
+            <input type="checkbox" formControlName="isCompleted" />
+            Completed
+          </label>
+          <button type="button" (click)="removeSubtask($index)">Remove Subtask</button>
+        </div>
+      }
+    </div>
+  <button type="button" (click)="addSubtask()">Add Subtask</button>
+  
+  <button type="submit">Add Task</button>
+</form>
