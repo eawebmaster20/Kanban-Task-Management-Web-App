@@ -14,6 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { ModalDirective } from './shared/directives/modal.directive';
 import { selectAllBoards, selectSelectedBoard } from './shared/state/board.selectors';
+import { CreateBoardComponent } from './components/modals/create-board/create-board.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DataService } from './shared/services/data/data.service';
+import { getRandomColor } from './shared/utils/colorGenerator';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +32,8 @@ import { selectAllBoards, selectSelectedBoard } from './shared/state/board.selec
     MatIconModule,
     InputSwitchModule,
     HeaderComponent,
-    ModalDirective
+    ModalDirective,
+    CreateBoardComponent
   ],
   
   templateUrl: './app.component.html',
@@ -43,24 +48,15 @@ export class AppComponent {
   selectedBoard = selectSelectedBoard
   constructor(
     public store:Store,
-    private apiService:ApiService,  
+    public dialog: MatDialog,
+    private dataService:DataService
   ) {
       this.store.dispatch(fetchBoards());
-      // this.store.select(selectAllBoards).subscribe({
-      //   next:(res)=>console.log(res)
-      // })
   }
 
   toggleTheme(){
     this.checked = !this.checked;
     console.log('theme toggled to :', this.checked);
-  }
-  addBoard(){
-    this.store.dispatch(addBoard({board:this.board}))
-  }
-
-  updateBoard(){
-    this.store.dispatch(updateBoard({board:{id:'',name:'',columns:[]}}))
   }
 
   deleteBoard(){
@@ -68,8 +64,19 @@ export class AppComponent {
   }
 
   selectBoard(board: IBoard){
-    // this.selectedBoard = boardName
-    // console.log(board)
+    board.columns.forEach(element => {
+      this.dataService.colorList.push(getRandomColor())
+    });
+    this.dataService.selectedBoard.next(board)
+    localStorage.setItem('selectedBoard',JSON.stringify(board))
     this.store.dispatch(selectBoard({board}));
+  }
+
+  openDialog() {
+    console.log('dialog open')
+    const dialogRef = this.dialog.open(CreateBoardComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
