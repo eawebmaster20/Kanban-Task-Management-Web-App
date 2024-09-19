@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { selectSelectedBoard } from '../../shared/state/board.selectors';
 import { getRandomColor } from '../../shared/utils/colorGenerator';
 import { MatIconModule } from '@angular/material/icon';
+import { DataService } from '../../shared/services/data/data.service';
 
 @Component({
   selector: 'app-board-renderer',
@@ -22,18 +23,18 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './board-renderer.component.sass'
 })
 export class BoardRendererComponent {
-  selectedBoard!: IBoard | null
+  // selectedBoard!: IBoard | null
   controlBoard!: IBoard 
-  colorList:string[] =[]
-  constructor(public store:Store) {
-    this.store.select(selectSelectedBoard).subscribe((board) => {
-      console.log(board);
-      board?.columns.forEach(element => {
-        this.colorList.push(getRandomColor())
-      });
-      localStorage.setItem('selectedBoard', JSON.stringify(board));
-      this.selectedBoard =  board ? JSON.parse(localStorage.getItem('selectedBoard')!) : null;
-    });
+  // colorList:string[] =[]
+  constructor(public store:Store, public dataService:DataService) {
+    // this.store.select(selectSelectedBoard).subscribe((board) => {
+    //   console.log(board);
+    //   board?.columns.forEach(element => {
+    //     this.colorList.push(getRandomColor())
+    //   });
+    //   localStorage.setItem('selectedBoard', JSON.stringify(board));
+    //   this.selectedBoard =  board ? JSON.parse(localStorage.getItem('selectedBoard')!) : null;
+    // });
   }
 
 
