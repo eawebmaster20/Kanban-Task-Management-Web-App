@@ -1,10 +1,10 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, ReactiveFormsModule, FormControl, Validators, FormsModule } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid'
 import { Store } from '@ngrx/store';
 import { updateBoard } from '../../../shared/state/board.actions';
 import { DataService } from '../../../shared/services/data/data.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AsyncPipe } from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import { atLeastOneColumnValidator } from '../../../shared/utils/custom-form-validators/atleast-one-column';
@@ -21,9 +21,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class TaskModalComponent {
   taskForm: FormGroup;
-
+  data = inject(MAT_DIALOG_DATA);
   constructor(private fb: FormBuilder, private store: Store, public dataService: DataService,public dialogRef: MatDialogRef<TaskModalComponent>) {
-    
+    console.log(this.data)
     this.taskForm = this.fb.group({
       id: uuidv4(),
       title: ['', Validators.required],

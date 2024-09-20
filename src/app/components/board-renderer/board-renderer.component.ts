@@ -14,6 +14,8 @@ import { selectSelectedBoard } from '../../shared/state/board.selectors';
 import { getRandomColor } from '../../shared/utils/colorGenerator';
 import { MatIconModule } from '@angular/material/icon';
 import { DataService } from '../../shared/services/data/data.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskDetailsModalComponent } from '../modals/task-details-modal/task-details-modal.component';
 
 @Component({
   selector: 'app-board-renderer',
@@ -26,18 +28,14 @@ export class BoardRendererComponent {
   // selectedBoard!: IBoard | null
   controlBoard!: IBoard 
   // colorList:string[] =[]
-  constructor(public store:Store, public dataService:DataService) {
-    // this.store.select(selectSelectedBoard).subscribe((board) => {
-    //   console.log(board);
-    //   board?.columns.forEach(element => {
-    //     this.colorList.push(getRandomColor())
-    //   });
-    //   localStorage.setItem('selectedBoard', JSON.stringify(board));
-    //   this.selectedBoard =  board ? JSON.parse(localStorage.getItem('selectedBoard')!) : null;
-    // });
+  constructor(public store:Store, public dataService:DataService,public dialog: MatDialog) { }
+
+  openTaskDetailsDialog(task:ITask){
+    this.dialog.open(TaskDetailsModalComponent,{
+      width:"480px",
+      data:task
+    })
   }
-
-
   dropStore(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

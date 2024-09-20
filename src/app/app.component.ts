@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ApiService } from './shared/services/api/api.service';
@@ -17,7 +17,7 @@ import { selectAllBoards, selectSelectedBoard } from './shared/state/board.selec
 import { CreateBoardComponent } from './components/modals/create-board/create-board.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from './shared/services/data/data.service';
-import { getRandomColor } from './shared/utils/colorGenerator';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -39,9 +39,9 @@ import { getRandomColor } from './shared/utils/colorGenerator';
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'kanbanTaskManagement';
-  boards = ['Platform Launch', 'Marketing Plan', 'Roadmap']
+  // boards = ['Platform Launch', 'Marketing Plan', 'Roadmap']
   board:IBoard = {id:uuidv4(),name:'test board name',columns:[]}
   checked: boolean  = true
   allStoreBoards = selectAllBoards
@@ -49,28 +49,25 @@ export class AppComponent {
   constructor(
     public store:Store,
     public dialog: MatDialog,
-    private dataService:DataService
+    public dataService:DataService
   ) {
       this.store.dispatch(fetchBoards());
   }
-
+  
+  ngOnInit(){
+    this.store.select(this.allStoreBoards).pipe(
+      take(1),
+    ).subscribe(boards=>{
+      this.dataService.selectBoard(boards[0])
+    })
+  }
   toggleTheme(){
     this.checked = !this.checked;
     console.log('theme toggled to :', this.checked);
   }
 
-  deleteBoard(){
-    this.store.dispatch(deleteBoard({id:''}))
-  }
 
-  selectBoard(board: IBoard){
-    board.columns.forEach(element => {
-      this.dataService.colorList.push(getRandomColor())
-    });
-    this.dataService.selectedBoard.next(board)
-    localStorage.setItem('selectedBoard',JSON.stringify(board))
-    this.store.dispatch(selectBoard({board}));
-  }
+
 
   openDialog() {
     console.log('dialog open')

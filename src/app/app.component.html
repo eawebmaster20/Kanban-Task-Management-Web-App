@@ -11,7 +11,7 @@
             @for (board of store.select(allStoreBoards) | async; track board) {
               <mat-list-item 
               [class]="(store.select(selectedBoard) | async) === board? 'active':'inactive'"
-              (click)="selectBoard(board)" 
+              (click)="dataService.selectBoard(board)" 
               class="board-list-item">
                 <mat-icon matListItemIcon>
                   <svg width="16" height="16"

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { v4 as uuidv4 } from 'uuid'
 import { atLeastOneColumnValidator } from '../../../shared/utils/custom-form-validators/atleast-one-column';
 import { Store } from '@ngrx/store';
@@ -17,7 +17,7 @@ import { addBoard } from '../../../shared/state/board.actions';
 })
 export class CreateBoardComponent {
   boardForm: FormGroup;
-
+  data = inject(MAT_DIALOG_DATA);
   constructor(private fb: FormBuilder, private store:Store) {
     this.boardForm = this.fb.group({
       id:uuidv4(),
@@ -30,6 +30,7 @@ export class CreateBoardComponent {
       tasks: this.fb.array([]) 
     });
     this.columns.push(columnForm)
+    console.log(this.data)
   }
 
   get columns(): FormArray {

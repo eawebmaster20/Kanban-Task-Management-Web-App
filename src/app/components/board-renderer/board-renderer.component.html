@@ -11,8 +11,9 @@
                 (cdkDropListDropped)="dropStore($event)"
                 [cdkDropListData]="column.tasks"
                 class="task-list">
-                    @for (task of column.tasks; track $index) {
-                        <div cdkDrag class="card">
+                @for (task of column.tasks; track $index) {
+                    <div cdkDrag class="card"
+                    (click)="openTaskDetailsDialog(task)">
                             <div class="card-title"> 
                                 {{task.title}} 
                             </div> 
