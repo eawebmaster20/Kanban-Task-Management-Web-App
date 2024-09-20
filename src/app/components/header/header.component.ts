@@ -7,7 +7,8 @@ import { TaskModalComponent } from '../modals/task-modal/task-modal.component';
 import { DataService } from '../../shared/services/data/data.service';
 import { Store } from '@ngrx/store';
 import { deleteBoard } from '../../shared/state/board.actions';
-import { IBoard } from '../../shared/models/board';
+import { IBoard, ITask } from '../../shared/models/board';
+import { CreateBoardComponent } from '../modals/create-board/create-board.component';
 
 @Component({
   selector: 'app-header',
@@ -25,10 +26,20 @@ constructor(public dataService:DataService,public dialog: MatDialog, private sto
     console.log(this.dataService.showDropdown)
     this.dataService.showDropdown = !this.dataService.showDropdown
   }
-  openDialog(board?:IBoard) {
+  openBoardDialog(board?:IBoard) {
+    console.log('dialog open')
+    const dialogRef = this.dialog.open(CreateBoardComponent,{
+      data:board
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  
+  openTaskDialog(task?:ITask) {
     console.log('dialog open')
     const dialogRef = this.dialog.open(TaskModalComponent,{
-      data:board
+      data:task
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

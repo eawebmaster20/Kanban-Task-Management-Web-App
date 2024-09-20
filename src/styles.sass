@@ -64,6 +64,12 @@ body
             justify-content: center
             align-items: center
 
+    .modal
+        .edit
+            color: #828fa3
+            transition: opacity .2s ease
+        .delete
+            color: #ea5555
     .parent 
         display: grid
         grid-template-columns: 18.8rem 1fr
@@ -233,7 +239,6 @@ body
         flex-direction: column
         text-align: left
         margin: 2rem
-        min-height: 60vh
         max-height: 80vh
         overflow-y: auto
         -ms-overflow-style: none
@@ -293,8 +298,11 @@ body
             gap: 0.5rem
             
             .column-input-group
+                cursor: pointer
                 display: flex
+                gap: 1rem
                 justify-content: space-between
+                align-items: center
 
 
     

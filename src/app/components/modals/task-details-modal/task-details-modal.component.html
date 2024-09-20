@@ -2,7 +2,15 @@
     <div class="content">
         <div class="title">
             <h3>{{data.title}}</h3>
-            <mat-icon id="toggleModal">more_vert</mat-icon>
+            <mat-icon [matMenuTriggerFor]="menu" id="toggleModal">more_vert</mat-icon>
+            <mat-menu class="modal" #menu="matMenu">
+                <button mat-menu-item>
+                    <span class="edit" (click)="openTaskDialog(data)">Edit Task</span>
+                </button>
+                <button mat-menu-item>
+                    <span class="delete" (click)="dataService.deleteBoard()">Delete Task</span>
+                </button>
+              </mat-menu>
         </div>
         <mat-dialog-content class="content-detail">
             @if (data.description.length >0) {

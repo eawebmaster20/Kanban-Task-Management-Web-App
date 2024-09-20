@@ -10,6 +10,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { atLeastOneColumnValidator } from '../../../shared/utils/custom-form-validators/atleast-one-column';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ITask } from '../../../shared/models/board';
 
 @Component({
   selector: 'app-task-modal',
@@ -21,6 +22,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class TaskModalComponent {
   taskForm: FormGroup;
+  edit = false;
   data = inject(MAT_DIALOG_DATA);
   constructor(private fb: FormBuilder, private store: Store, public dataService: DataService,public dialogRef: MatDialogRef<TaskModalComponent>) {
     console.log(this.data)
@@ -31,11 +33,12 @@ export class TaskModalComponent {
       status: ['', Validators.required],
       subtasks: this.fb.array([],atLeastOneColumnValidator())
     });
+    this.data?.title?.length ? (this.populateTaskForm(this.data), this.edit=true, console.log('if')):this.addSubtask()
   }
 
-  ngOnInit(): void {
-    this.addSubtask()
-  }
+  // ngOnInit(): void {
+  //   this.addSubtask()
+  // }
 
   get subtasks(): FormArray {
     return this.taskForm.get('subtasks') as FormArray;
@@ -82,6 +85,24 @@ export class TaskModalComponent {
     return this.fb.group({
       title: ['', Validators.required],
       isCompleted: [false]
+    });
+  }
+
+
+  populateTaskForm(taskData: any) {
+    this.taskForm.patchValue({
+      id: uuidv4(), // Generate new id for this task
+      title: taskData.title || '',
+      description: taskData.description || '',
+      status: taskData.status || ''
+    });
+
+    taskData.subtasks.forEach((subtask: any) => {
+      const subtaskForm = this.fb.group({
+        title: [subtask.title || '', Validators.required],
+        isCompleted: [subtask.isCompleted || false]
+      });
+      this.subtasks.push(subtaskForm);
     });
   }
 }

@@ -18,7 +18,7 @@
           </div>
           }
           <button class="btn btn-sm btn-secondary" type="button" (click)="addColumn()">Add New Column</button>
-          <button class="btn btn-sm btn-primary" [disabled]="boardForm.invalid" type="submit">Create New Board</button>
+          <button class="btn btn-sm btn-primary" [disabled]="boardForm.invalid" type="submit">{{edit?'Save Changes':'Create New Board'}}</button>
         </div>
       </div>
   

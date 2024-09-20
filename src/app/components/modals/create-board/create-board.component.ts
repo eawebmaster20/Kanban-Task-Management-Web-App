@@ -18,6 +18,7 @@ import { addBoard } from '../../../shared/state/board.actions';
 export class CreateBoardComponent {
   boardForm: FormGroup;
   data = inject(MAT_DIALOG_DATA);
+  edit = false;
   constructor(private fb: FormBuilder, private store:Store) {
     this.boardForm = this.fb.group({
       id:uuidv4(),
@@ -29,12 +30,15 @@ export class CreateBoardComponent {
       name: ['', Validators.required], 
       tasks: this.fb.array([]) 
     });
-    this.columns.push(columnForm)
-    console.log(this.data)
+    
+    this.data?.name?.length ? (this.populateForm(this.data), this.edit=true):this.columns.push(columnForm)
   }
 
   get columns(): FormArray {
     return this.boardForm.get('columns') as FormArray;
+  }
+  getTasks(columnIndex: number): FormArray {
+    return (this.columns.at(columnIndex).get('tasks') as FormArray);
   }
 
   addColumn(): void {
@@ -57,5 +61,41 @@ export class CreateBoardComponent {
     console.log(this.boardForm.valid);
     this.store.dispatch(addBoard({board:this.boardForm.value}))
     this.boardForm.reset();
+  }
+
+  populateForm(data: any) {
+    this.boardForm.patchValue({
+      id: data.id || uuidv4(),
+      name: data.name || ''
+    });
+
+    data.columns.forEach((column: any) => {
+      const columnForm = this.fb.group({
+        id: [column.id || uuidv4()],
+        name: [column.name || '', Validators.required],
+        tasks: this.fb.array([])
+      });
+
+      column.tasks.forEach((task: any) => {
+        const taskForm = this.fb.group({
+          title: [task.title || '', Validators.required],
+          description: [task.description || ''],
+          status: [task.status || ''],
+          subtasks: this.fb.array([]) 
+        });
+
+        task.subtasks.forEach((subtask: any) => {
+          const subtaskForm = this.fb.group({
+            title: [subtask.title || '', Validators.required],
+            isCompleted: [subtask.isCompleted || false]
+          });
+          (taskForm.get('subtasks') as FormArray).push(subtaskForm);
+        });
+
+        (columnForm.get('tasks') as FormArray).push(taskForm);
+      });
+
+      this.columns.push(columnForm);
+    });
   }
 }
