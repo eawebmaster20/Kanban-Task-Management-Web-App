@@ -1,26 +1,26 @@
 <form [formGroup]="boardForm" (ngSubmit)="onSubmit()">
     <div class="modal-form-container">
       <h2 class="form-title">Add New Board</h2>
-    <div class="form-input-group">
-      <label for="boardName" class="input-group-label">Name</label>
-      <input id="boardName" formControlName="name" type="text" class="input-text"/>
-      @if (boardForm.get('name')?.errors && boardForm.get('name')?.touched) {
-        <span>error</span>
-      }
-    </div>
-    <div formArrayName="columns" class="columns">
-      <label for="columnName" class="input-group-label">Columns</label>
-      <div class="column-list">
-        @for (column of columns.controls; track $index) {
-          <div class="column-input-group" [formGroupName]="$index">
-          <input formControlName="name" placeholder=""/>
-          <span><img (click)="removeColumn($index)" src="assets/icons/icon-cross.svg" alt="" srcset=""></span>
-        </div>
+      <div class="form-input-group">
+        <label for="boardName" class="input-group-label">Name</label>
+        <input id="boardName" formControlName="name" type="text" class="input-text"/>
+        @if (boardForm.get('name')?.errors && boardForm.get('name')?.touched) {
+          <span>error</span>
         }
-        <button class="btn btn-sm btn-secondary" type="button" (click)="addColumn()">Add New Column</button>
-        <button class="btn btn-sm btn-primary" [disabled]="boardForm.invalid" type="submit">Create New Board</button>
       </div>
-    </div>
+      <div formArrayName="columns" class="columns">
+        <label for="columnName" class="input-group-label">Columns</label>
+        <div class="column-list">
+          @for (column of columns.controls; track $index) {
+            <div class="column-input-group" [formGroupName]="$index">
+            <input formControlName="name" placeholder=""/>
+            <span><img (click)="removeColumn($index)" src="assets/icons/icon-cross.svg" alt="" srcset=""></span>
+          </div>
+          }
+          <button class="btn btn-sm btn-secondary" type="button" (click)="addColumn()">Add New Column</button>
+          <button class="btn btn-sm btn-primary" [disabled]="boardForm.invalid" type="submit">Create New Board</button>
+        </div>
+      </div>
   
     </div>
   </form>

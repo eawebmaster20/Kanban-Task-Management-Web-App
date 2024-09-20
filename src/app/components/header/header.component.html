@@ -18,10 +18,9 @@
                   Create New Task
             </button>
             <mat-icon  (click)="toggleMenu()" id="toggleModal">more_vert</mat-icon>
-            <div class="modal" [class]="hostService.showDropdown ? 'show':'hide'">
+            <div class="modal" [class]="dataService.showDropdown ? 'show':'hide'">
                 <span class="edit">Edit Board</span>
-                <span class="delete">Delete Board</span>
-
+                <span class="delete" (click)="deleteBoard()">Delete Board</span>
             </div>
         </div>
     </div>

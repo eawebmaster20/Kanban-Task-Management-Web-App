@@ -61,7 +61,7 @@ export class BoardEffects {
         withLatestFrom(this.store.select(selectSelectedBoard)),
         tap(([action, selectedBoard]) => {
           if (selectedBoard) {
-            console.log('localstorage updated', selectedBoard);
+            // console.log('localstorage updated', selectedBoard);
             localStorage.setItem('selectedBoard', JSON.stringify(selectedBoard));
           }
         })

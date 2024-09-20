@@ -5,6 +5,8 @@ import { MenuModule } from 'primeng/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskModalComponent } from '../modals/task-modal/task-modal.component';
 import { DataService } from '../../shared/services/data/data.service';
+import { Store } from '@ngrx/store';
+import { deleteBoard } from '../../shared/state/board.actions';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +18,11 @@ import { DataService } from '../../shared/services/data/data.service';
 
 export class HeaderComponent {
 
-constructor(public hostService:DataService,public dialog: MatDialog){}
+constructor(public dataService:DataService,public dialog: MatDialog, private store: Store){}
 
   toggleMenu() {
-    console.log(this.hostService.showDropdown)
-    this.hostService.showDropdown = !this.hostService.showDropdown
+    console.log(this.dataService.showDropdown)
+    this.dataService.showDropdown = !this.dataService.showDropdown
   }
   openDialog() {
     console.log('dialog open')
@@ -34,5 +36,8 @@ constructor(public hostService:DataService,public dialog: MatDialog){}
     // <img src="../../../assets/icons/logo-dark.svg" alt="" srcset="">
     // <img src="../../../assets/icons/logo-light.svg" alt="" srcset="">
     // <img src="../../../assets/icons/logo-mobile.svg" alt="" srcset="">
+  }
+  deleteBoard(){
+    this.dataService.deleteBoard()
   }
 }

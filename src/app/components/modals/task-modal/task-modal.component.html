@@ -1,33 +1,40 @@
 <form [formGroup]="taskForm" (ngSubmit)="createTask()">
-  <h3>Create Task</h3>
-  
-  <label for="title">Task Title</label>
-  <input id="title" formControlName="title" placeholder="Task title" />
-
-  <label for="description">Task Description</label>
-  <textarea id="description" formControlName="description" placeholder="Task description"></textarea>
-
-  <label for="status">Status</label>
-  <select id="status" formControlName="columnId">
-    @for (column of selectedBoard.columns; track $index) {
-      <option [value]="column.id">{{ column.name }}</option>
-    }
-  </select>
-  <h4>Subtasks</h4>
-  <div formArrayName="subtasks">
-    @for (subtask of subtasks.controls; track $index) {
-        <div [formGroupName]="$index">
-          <label for="subtask-title">Subtask Title</label>
-          <input id="subtask-title" formControlName="title" placeholder="Subtask title" />
-          <label>
-            <input type="checkbox" formControlName="isCompleted" />
-            Completed
-          </label>
-          <button type="button" (click)="removeSubtask($index)">Remove Subtask</button>
-        </div>
-      }
+  <div class="modal-form-container">
+    <h2>Add New Task</h2>
+    <div class="form-input-group">
+      <label class="input-group-label" for="title">Title</label>
+      <input class="input-text" id="title" formControlName="title"/>
     </div>
-  <button type="button" (click)="addSubtask()">Add Subtask</button>
-  
-  <button type="submit">Add Task</button>
+    <div class="form-input-group">
+      <label class="input-group-label" for="description">Description</label>
+      <textarea id="description" rows="4" formControlName="description"></textarea>
+    </div>
+    
+    <div class="columns" formArrayName="subtasks">
+      <label for="columnName" class="input-group-label">Subtasks</label>
+      <div class="column-list">
+        @for (subtask of subtasks.controls; track $index) {
+            <div class="column-input-group" [formGroupName]="$index">
+              <input id="subtask-title" formControlName="title"/>
+              <!-- <label>
+                <input type="checkbox" formControlName="isCompleted" />
+                Completed
+              </label> -->
+              <span><img (click)="removeSubtask($index)" src="assets/icons/icon-cross.svg" alt="" srcset=""></span>
+            </div>
+          }
+          <button class="btn btn-sm btn-secondary" type="button" (click)="addSubtask()">+ Add New Subtask</button>
+      </div>
+    </div>
+      
+    <label for="status">Status</label>
+      <mat-form-field panelClass="custom-select-panel" appearance="outline">
+        <mat-select formControlName="status">
+          @for (column of (dataService.selectedBoard | async)?.columns; track $index) {
+              <mat-option [value]="column.id">{{ column.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    <button class="btn btn-sm btn-primary" type="submit">Create Task</button>
+  </div>
 </form>
