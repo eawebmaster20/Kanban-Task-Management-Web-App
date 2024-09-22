@@ -65,4 +65,8 @@ $kanbanTaskManagement-theme: mat.define-light-theme((
 .mat-mdc-menu-item:hover{
   color: darken(#828fa366, 20%);
 }
+
+div.mat-mdc-select-panel{
+  background-color: white !important;
+}
 body { margin: 0; font-family: "Plus Jakarta Sans", sans-serif; }

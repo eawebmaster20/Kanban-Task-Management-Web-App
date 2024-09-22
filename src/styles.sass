@@ -63,10 +63,39 @@ body
             display: flex
             justify-content: center
             align-items: center
+    .card
+        display: flex
+        text-align: left
+        flex-direction: column
+        cursor: grab
+        background: #fff
+        border: 1px solid rgba(134, 134, 134, .1)
+        border-radius: 8px
+        box-shadow: 0 4px 6px #364e7e1a
+        padding: 1.5rem 1rem
+        margin-bottom: 1.5rem
+        transition: filter .2s ease
+
+        .card-title
+            font-size: .9375rem
+            font-weight: 700
+            margin-bottom: .5rem
+            display: -webkit-box
+            -webkit-line-clamp: 3
+            -webkit-box-orient: vertical
+            text-overflow: ellipsis
+            word-break: break-word
+            overflow: hidden
+
+        .card-count
+            font-size: .75rem
+            font-weight: 700
+            color: #828fa3
 
     .modal
         .edit
             color: #828fa3
+            width: 100%
             transition: opacity .2s ease
         .delete
             color: #ea5555
