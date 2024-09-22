@@ -55,11 +55,7 @@ export class AppComponent implements OnInit {
   }
   
   ngOnInit(){
-    this.store.select(this.allStoreBoards).pipe(
-      take(1),
-    ).subscribe(boards=>{
-      this.dataService.selectBoard(boards[0])
-    })
+    this.dataService.highlightFirstBoard()
   }
   toggleTheme(){
     this.checked = !this.checked;
@@ -72,8 +68,13 @@ export class AppComponent implements OnInit {
   openDialog() {
     console.log('dialog open')
     const dialogRef = this.dialog.open(CreateBoardComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe({
+      next: (res) =>  {
+        if(!res.update){
+          this.dataService.createBoard(res.data)
+        }
+      },
+      error: (err) => console.error('Error:', err)
     });
   }
 }
