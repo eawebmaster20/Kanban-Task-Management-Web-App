@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { v4 as uuidv4 } from 'uuid'
 import { atLeastOneColumnValidator } from '../../../shared/utils/custom-form-validators/atleast-one-column';
 import { Store } from '@ngrx/store';
-import { addBoard } from '../../../shared/state/board.actions';
 
 @Component({
   selector: 'app-create-board',
@@ -19,7 +18,7 @@ export class CreateBoardComponent {
   boardForm: FormGroup;
   data = inject(MAT_DIALOG_DATA);
   edit = false;
-  constructor(private fb: FormBuilder, private store:Store) {
+  constructor(private fb: FormBuilder, private store:Store, public dialogRef: MatDialogRef<CreateBoardComponent>) {
     this.boardForm = this.fb.group({
       id:uuidv4(),
       name: ['', Validators.required],
@@ -57,13 +56,14 @@ export class CreateBoardComponent {
  
   
   onSubmit(): void {
-    console.log(this.boardForm.value);
-    console.log(this.boardForm.valid);
-    this.store.dispatch(addBoard({board:this.boardForm.value}))
-    this.boardForm.reset();
+    if (this.boardForm.valid) {
+      this.dialogRef.close({data:this.boardForm.value, update:this.edit});
+      this.boardForm.reset();
+    }
   }
 
   populateForm(data: any) {
+    
     this.boardForm.patchValue({
       id: data.id || uuidv4(),
       name: data.name || ''

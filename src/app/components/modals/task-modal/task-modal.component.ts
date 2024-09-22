@@ -75,9 +75,13 @@ export class TaskModalComponent {
           ...currentBoard,
           columns: updatedColumns
         });
+        this.taskForm.reset();
+        this.dialogRef.close(true);
       }
-      this.taskForm.reset();
-      this.dialogRef.close();
+      else{
+        this.taskForm.reset();
+        this.dialogRef.close();
+      }
     }
   }
 
