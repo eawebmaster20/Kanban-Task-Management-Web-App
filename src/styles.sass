@@ -68,7 +68,8 @@ body
         text-align: left
         flex-direction: column
         cursor: grab
-        background: #fff
+        color: var(--main-color)
+        background: var(--card-bg)
         border: 1px solid rgba(134, 134, 134, .1)
         border-radius: 8px
         box-shadow: 0 4px 6px #364e7e1a
@@ -113,7 +114,7 @@ body
 
     .header  
         grid-area: 1 / 1 / 2 / 3
-        border-bottom: 1px solid #e4ebfa
+        border-bottom: 1px solid var(--border-line-color)
 
     .content  
         grid-area: 2 / 1 / 3 / 3
@@ -144,122 +145,127 @@ body
                 mat-icon
                     margin-right: 1rem
 
-        .sidenav
-            display: flex
-            flex-direction: column
-            justify-content: space-between
-            color: #828fa3
-            background: var(--color-main)
-            font-weight: 700
-            min-width: 18.75rem
-            height: calc(100% - 6rem)
-            padding-top: 1rem
-            padding-bottom: 2rem
-            transition: transform .2s ease
-            cursor: default
-            border-right: 1px solid #e4ebfa
-            mat-list
-                .list-header
-                    letter-spacing: 2.4px
-                    font-size: .75rem
-                    padding-left: 1rem
-                    margin-bottom: 1rem
+        mat-drawer
+            background: var(--main-bg)
+            .sidenav
+                display: flex
+                flex-direction: column
+                justify-content: space-between
+                color: #828fa3
+                font-weight: 700
+                min-width: 18.75rem
+                height: calc(100% - 3rem)
+                padding-top: 1rem
+                padding-bottom: 2rem
+                transition: transform .2s ease
+                cursor: default
+                border-right: 1px solid var(--border-line-color)
+                mat-list
+                    .list-header
+                        letter-spacing: 2.4px
+                        font-size: .75rem
+                        padding-left: 1rem
+                        margin-bottom: 1rem
 
-                .active
-                    color: #fff
-                    background-color: #635fc7
-                    border-radius: 0 25px 25px 0
-
-                .inactive
-                    color: inherit
-                    background: transparent
-                    &:hover
-                        background-color: #A8A4FF
+                    .active
                         color: #fff
+                        background-color: #635fc7
                         border-radius: 0 25px 25px 0
 
-                .create-board-list-item
-                    align-items: center
-                    color: #635fc7
-                    padding-left: 2rem
-                    cursor: pointer
-                    padding-top: .5rem
-                    &:hover
-                        color: #A8A4FF
+                    .inactive
+                        color: inherit
+                        background: transparent
+                        &:hover
+                            background-color: #A8A4FF
+                            color: #fff
+                            border-radius: 0 25px 25px 0
 
-                    .create-board-container
-                        display: flex
-
-                    .add-icon
-                        margin-right:0
-                        display: flex
-                        justify-content: center
+                    .create-board-list-item
                         align-items: center
+                        color: #635fc7
+                        padding-left: 2rem
+                        cursor: pointer
+                        padding-top: .5rem
+                        &:hover
+                            color: #A8A4FF
 
-                    mat-icon
-                        margin-right: 1rem
-                    
+                        .create-board-container
+                            display: flex
+
+                        .add-icon
+                            margin-right:0
+                            display: flex
+                            justify-content: center
+                            align-items: center
+
+                        mat-icon
+                            margin-right: 1rem
+                            display: flex
+                            align-items: center
                         
-                .board-list-item
-                    cursor: pointer
-                    display: flex
-                    align-items: center
-                    text-align: left
-                    padding-left: 2rem
-                    padding-bottom: .5rem
-                    padding-top: .5rem
-                    width: 17.25rem
-                    min-height: 2.8rem
-                    height: fit-content
-                    word-break: break-word
-                    margin-bottom: .2rem
-                    transition: color .2s ease
-
-                    mat-icon
-                        margin-right: 1rem
-
-            .sidenav-footer
-                .theme
-                    display: flex
-                    background-color: #f4f7fd
-                    justify-content: center
-                    gap: 1rem
-                    align-items: center
-                    width: 235px
-                    height: 48px
-                    margin-left: 1.5rem
-                    border-radius: 6px
-                    
-                    .theme-toggler
-                        height: 20px
-                        width: 40px
-                        border-radius: 10px
-                        background-color: #635FC7
-                        position: relative
+                            
+                    .board-list-item
                         cursor: pointer
                         display: flex
                         align-items: center
+                        text-align: left
+                        padding-left: 2rem
+                        padding-bottom: .5rem
+                        padding-top: .5rem
+                        width: 17.25rem
+                        min-height: 2.8rem
+                        height: fit-content
+                        word-break: break-word
+                        margin-bottom: .2rem
+                        transition: color .2s ease
 
-                        .toggler
-                            padding: 0
-                            width: 14px
-                            height: 14px
-                            border-radius: 50%
-                            background-color: white
-                            position: absolute
-                            left: 3px
-                            transition: left 0.3s ease
+                        mat-icon
+                            margin-right: 1rem
+                            display: flex
+                            align-items: center
 
-
-                .toggle-sidebar
-                        font-size: .9375rem
+                .sidenav-footer
+                    .theme
                         display: flex
-                        cursor: pointer
+                        background-color: var(--board-bg)
+                        justify-content: center
                         gap: 1rem
                         align-items: center
-                        margin-left: 2rem
-                        margin-top: 1rem
-                        transition: opacity .1s ease-out
+                        width: 235px
+                        height: 48px
+                        margin-left: 1.5rem
+                        border-radius: 6px
+                        
+                        .theme-toggler
+                            height: 20px
+                            width: 40px
+                            border-radius: 10px
+                            background-color: #635FC7
+                            position: relative
+                            cursor: pointer
+                            display: flex
+                            align-items: center
+
+                            .toggler
+                                padding: 0
+                                width: 14px
+                                height: 14px
+                                border-radius: 50%
+                                background-color: white
+                                position: absolute
+                                left: 3px
+                                transition: left 0.3s ease
+
+
+                    .toggle-sidebar
+                            font-size: .9375rem
+                            display: flex
+                            cursor: pointer
+                            gap: 1rem
+                            align-items: center
+                            margin-left: 2rem
+                            margin-top: 1rem
+                            transition: opacity .1s ease-out
 
     .modal-form-container
         height: 100%
