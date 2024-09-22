@@ -1,8 +1,10 @@
 <div class="header-parent">
     <div class="div1">
         <picture>
+            <source media="(min-width: 768px)" [srcset]="logoImg()">
+            <source media="(min-width: 1024px)" type="image/jpeg" [srcset]="logoImg()">
             <source [srcset]="logoImg()" media="(max-width: 600px)">
-            <img src="assets/icons/logo-dark.svg" alt="Kanban Task Management">
+            <img src="" alt="Kanban Task Management">
         </picture>
     </div>
     <div class="div2">
