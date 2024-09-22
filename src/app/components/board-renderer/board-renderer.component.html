@@ -1,4 +1,5 @@
 <div class="board" cdkDropListGroup>
+   <div class="column-list">
     @if (dataService.selectedBoard |async) {
         @for (column of (dataService.selectedBoard |async)?.columns; track $index) {
             <div class="column">
@@ -10,7 +11,7 @@
                 cdkDropList
                 (cdkDropListDropped)="dropStore($event)"
                 [cdkDropListData]="column.tasks"
-                class="task-list">
+                class="task-list"  [class]="column.tasks.length?'':'column-empty'">
                 @for (task of column.tasks; track $index) {
                     <div cdkDrag class="card"
                     (click)="openTaskDetailsDialog(task)">
@@ -44,4 +45,5 @@
             </button>
         </div>
     }
+   </div>
 </div>
