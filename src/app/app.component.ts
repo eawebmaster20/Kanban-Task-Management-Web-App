@@ -41,9 +41,7 @@ import { take } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'kanbanTaskManagement';
-  // boards = ['Platform Launch', 'Marketing Plan', 'Roadmap']
   board:IBoard = {id:uuidv4(),name:'test board name',columns:[]}
-  checked: boolean  = true
   allStoreBoards = selectAllBoards
   selectedBoard = selectSelectedBoard
   constructor(
@@ -58,8 +56,8 @@ export class AppComponent implements OnInit {
     this.dataService.highlightFirstBoard()
   }
   toggleTheme(){
-    this.checked = !this.checked;
-    console.log('theme toggled to :', this.checked);
+    this.dataService.checked = !this.dataService.checked;
+    console.log('theme toggled to :', this.dataService.checked);
   }
 
 
