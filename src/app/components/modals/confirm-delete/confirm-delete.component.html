@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="delete-board">
+        <div class="header">
+            <span class="title">Delete this board?</span>
+            <p class="text-info">
+                Are you sure you want to delete the ' new' board? This action will remove all columns and tasks and cannot be reversed.
+            </p>
+        </div>
+        <div class="delete-baord-actions">
+            <button (click)="deleteBoard()" type="button" class="btn btn-sm btn-primary">
+                Delete
+            </button>
+            <button mat-dialog-close type="button" class="btn btn-sm btn-primary">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
