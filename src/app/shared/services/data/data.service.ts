@@ -12,6 +12,7 @@ import { selectAllBoards } from '../../state/board.selectors';
 export class DataService {
   selectedBoard = new BehaviorSubject<IBoard | null>(null)
   colorList:string[] =[]
+  checked: boolean  = true
   showDropdown = false;
   constructor(private store:Store) { }
 
