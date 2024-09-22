@@ -1,0 +1,40 @@
+<form [formGroup]="taskForm" (ngSubmit)="createTask()">
+  <div class="modal-form-container">
+    <h2>Add New Task</h2>
+    <div class="form-input-group">
+      <label class="input-group-label" for="title">Title</label>
+      <input class="input-text" id="title" formControlName="title"/>
+    </div>
+    <div class="form-input-group">
+      <label class="input-group-label" for="description">Description</label>
+      <textarea id="description" rows="4" formControlName="description"></textarea>
+    </div>
+    
+    <div class="columns" formArrayName="subtasks">
+      <label for="columnName" class="input-group-label">Subtasks</label>
+      <div class="column-list">
+        @for (subtask of subtasks.controls; track $index) {
+            <div class="column-input-group" [formGroupName]="$index">
+              <input id="subtask-title" formControlName="title"/>
+              <!-- <label>
+                <input type="checkbox" formControlName="isCompleted" />
+                Completed
+              </label> -->
+              <span><img (click)="removeSubtask($index)" src="assets/icons/icon-cross.svg" alt="" srcset=""></span>
+            </div>
+          }
+          <button class="btn btn-sm btn-secondary" type="button" (click)="addSubtask()">+ Add New Subtask</button>
+      </div>
+    </div>
+      
+    <label for="status">Status</label>
+      <mat-form-field panelClass="custom-select-panel" appearance="outline">
+        <mat-select formControlName="status">
+          @for (column of (dataService.selectedBoard | async)?.columns; track $index) {
+              <mat-option [value]="column.id">{{ column.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    <button class="btn btn-sm btn-primary" type="submit">{{edit? 'Save Changes':'Create Task'}}</button>
+  </div>
+</form>

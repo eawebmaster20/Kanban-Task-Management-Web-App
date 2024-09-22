@@ -1,0 +1,38 @@
+<div class="task-modal-details-container">
+    <div class="content">
+        <div class="title">
+            <h3>{{data.title}}</h3>
+            <mat-icon [matMenuTriggerFor]="menu" id="toggleModal">more_vert</mat-icon>
+            <mat-menu class="modal" #menu="matMenu">
+                <button mat-menu-item>
+                    <span class="edit" (click)="openTaskDialog(data)">Edit Task</span>
+                </button>
+                <button mat-menu-item>
+                    <span class="delete" (click)="dataService.deleteBoard()">Delete Task</span>
+                </button>
+              </mat-menu>
+        </div>
+        <mat-dialog-content class="content-detail">
+            @if (data.description.length >0) {
+                <p class="description">{{data.description}}</p>
+            }@else {
+                <p class="description">No description</p>
+            }
+            <p class="subtasks-count">Subtasks({{countCompleted(data) }} of {{data.subtasks.length}})</p>
+            <div class="sub-task-list">
+                @for (subtask of data.subtasks; track $index) {
+                    <mat-checkbox class="subtask-item" (change)="logger()" [(ngModel)]="subtask.isCompleted">
+                        <span [class]="subtask.isCompleted?'subtask-item-checked':''">{{subtask.title}}</span>
+                    </mat-checkbox>
+                }
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-select>
+                  @for (status of statusList; track $index) {
+                      <mat-option selected="Todo" [value]="status">{{ status }}</mat-option>
+                  }
+                </mat-select>
+            </mat-form-field>
+        </mat-dialog-content>
+    </div>
+</div>

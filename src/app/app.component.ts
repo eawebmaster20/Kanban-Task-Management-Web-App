@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ApiService } from './shared/services/api/api.service';
@@ -14,6 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { ModalDirective } from './shared/directives/modal.directive';
 import { selectAllBoards, selectSelectedBoard } from './shared/state/board.selectors';
+import { CreateBoardComponent } from './components/modals/create-board/create-board.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DataService } from './shared/services/data/data.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -28,48 +32,49 @@ import { selectAllBoards, selectSelectedBoard } from './shared/state/board.selec
     MatIconModule,
     InputSwitchModule,
     HeaderComponent,
-    ModalDirective
+    ModalDirective,
+    CreateBoardComponent
   ],
   
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'kanbanTaskManagement';
-  boards = ['Platform Launch', 'Marketing Plan', 'Roadmap']
+  // boards = ['Platform Launch', 'Marketing Plan', 'Roadmap']
   board:IBoard = {id:uuidv4(),name:'test board name',columns:[]}
   checked: boolean  = true
   allStoreBoards = selectAllBoards
   selectedBoard = selectSelectedBoard
   constructor(
     public store:Store,
-    private apiService:ApiService,  
+    public dialog: MatDialog,
+    public dataService:DataService
   ) {
       this.store.dispatch(fetchBoards());
-      // this.store.select(selectAllBoards).subscribe({
-      //   next:(res)=>console.log(res)
-      // })
   }
-
+  
+  ngOnInit(){
+    this.dataService.highlightFirstBoard()
+  }
   toggleTheme(){
     this.checked = !this.checked;
     console.log('theme toggled to :', this.checked);
   }
-  addBoard(){
-    this.store.dispatch(addBoard({board:this.board}))
-  }
 
-  updateBoard(){
-    this.store.dispatch(updateBoard({board:{id:'',name:'',columns:[]}}))
-  }
 
-  deleteBoard(){
-    this.store.dispatch(deleteBoard({id:''}))
-  }
 
-  selectBoard(board: IBoard){
-    // this.selectedBoard = boardName
-    // console.log(board)
-    this.store.dispatch(selectBoard({board}));
+
+  openDialog() {
+    console.log('dialog open')
+    const dialogRef = this.dialog.open(CreateBoardComponent);
+    dialogRef.afterClosed().subscribe({
+      next: (res) =>  {
+        if(!res.update){
+          this.dataService.createBoard(res.data)
+        }
+      },
+      error: (err) => console.error('Error:', err)
+    });
   }
 }

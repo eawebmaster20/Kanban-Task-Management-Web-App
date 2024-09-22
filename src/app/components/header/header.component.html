@@ -6,9 +6,9 @@
         </picture>
     </div>
     <div class="div2">
-        <h1>board name</h1>
+        <h1>{{dataService.selectedBoard.getValue()?.name}}</h1>
         <div class="actions">
-            <button class="create-task-btn">
+            <button (click)="openTaskDialog()" class="btn-primary btn btn-lg">
                 <mat-icon class="add-icon">
                     <svg width="12" height="12" 
                       xmlns="http://www.w3.org/2000/svg">
@@ -18,10 +18,9 @@
                   Create New Task
             </button>
             <mat-icon  (click)="toggleMenu()" id="toggleModal">more_vert</mat-icon>
-            <div class="modal" [class]="hostService.showDropdown ? 'show':'hide'">
-                <span class="edit">Edit Board</span>
-                <span class="delete">Delete Board</span>
-
+            <div class="modal" [class]="dataService.showDropdown ? 'show':'hide'">
+                <span class="edit" (click)="openBoardDialog(dataService.selectedBoard.getValue()!)">Edit Board</span>
+                <span class="delete" (click)="deleteBoard()">Delete Board</span>
             </div>
         </div>
     </div>
