@@ -6,7 +6,7 @@
         </picture>
     </div>
     <div class="div2">
-        <h1>board name</h1>
+        <h1>{{dataService.selectedBoard.getValue()?.name}}</h1>
         <div class="actions">
             <button (click)="openTaskDialog()" class="btn-primary btn btn-lg">
                 <mat-icon class="add-icon">

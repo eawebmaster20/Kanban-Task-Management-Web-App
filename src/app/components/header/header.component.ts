@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { deleteBoard } from '../../shared/state/board.actions';
 import { IBoard, ITask } from '../../shared/models/board';
 import { CreateBoardComponent } from '../modals/create-board/create-board.component';
+import { ConfirmDeleteComponent } from '../modals/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-header',
@@ -31,8 +32,14 @@ constructor(public dataService:DataService,public dialog: MatDialog, private sto
     const dialogRef = this.dialog.open(CreateBoardComponent,{
       data:board
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe({
+      next: (res) =>  {
+        if(res.update){
+          this.dataService.deleteBoard()
+          this.dataService.createBoard(res.data)
+        }
+      },
+      error: (err) => console.error('Error:', err)
     });
   }
   
@@ -41,9 +48,21 @@ constructor(public dataService:DataService,public dialog: MatDialog, private sto
     const dialogRef = this.dialog.open(TaskModalComponent,{
       data:task
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe(
+      {
+        next: (result) => {
+          if(result && this.dataService.selectedBoard.getValue()){
+            let data = this.dataService.selectedBoard.getValue();
+            this.dataService.deleteBoard()
+            this.dataService.createBoard(data!)
+          }
+          else{
+            console.log('cancel');
+          }
+        },
+        error: (err) => console.error('Error:', err)
+      }
+    )
   }
   logoImg(){
     return 'assets/images/logo.png';
@@ -52,6 +71,6 @@ constructor(public dataService:DataService,public dialog: MatDialog, private sto
     // <img src="../../../assets/icons/logo-mobile.svg" alt="" srcset="">
   }
   deleteBoard(){
-    this.dataService.deleteBoard()
+    this.dialog.open(ConfirmDeleteComponent);
   }
 }
