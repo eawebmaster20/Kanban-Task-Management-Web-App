@@ -18,6 +18,8 @@ import { CreateBoardComponent } from './components/modals/create-board/create-bo
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from './shared/services/data/data.service';
 import { take } from 'rxjs';
+import { ThemeTogglerComponent } from './components/theme-toggler/theme-toggler.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +27,6 @@ import { take } from 'rxjs';
   imports: [
     RouterOutlet, 
     MatSidenavModule,
-    MatListModule,
     AsyncPipe,
     CommonModule,
     FormsModule,
@@ -33,7 +34,7 @@ import { take } from 'rxjs';
     InputSwitchModule,
     HeaderComponent,
     ModalDirective,
-    CreateBoardComponent
+    SidebarComponent
   ],
   
   templateUrl: './app.component.html',
@@ -41,14 +42,11 @@ import { take } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'kanbanTaskManagement';
-  // boards = ['Platform Launch', 'Marketing Plan', 'Roadmap']
   board:IBoard = {id:uuidv4(),name:'test board name',columns:[]}
-  checked: boolean  = true
   allStoreBoards = selectAllBoards
   selectedBoard = selectSelectedBoard
   constructor(
     public store:Store,
-    public dialog: MatDialog,
     public dataService:DataService
   ) {
       this.store.dispatch(fetchBoards());
@@ -57,24 +55,5 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     this.dataService.highlightFirstBoard()
   }
-  toggleTheme(){
-    this.checked = !this.checked;
-    console.log('theme toggled to :', this.checked);
-  }
-
-
-
-
-  openDialog() {
-    console.log('dialog open')
-    const dialogRef = this.dialog.open(CreateBoardComponent);
-    dialogRef.afterClosed().subscribe({
-      next: (res) =>  {
-        if(!res.update){
-          this.dataService.createBoard(res.data)
-        }
-      },
-      error: (err) => console.error('Error:', err)
-    });
-  }
+  
 }

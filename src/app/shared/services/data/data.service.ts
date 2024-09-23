@@ -12,6 +12,8 @@ import { selectAllBoards } from '../../state/board.selectors';
 export class DataService {
   selectedBoard = new BehaviorSubject<IBoard | null>(null)
   colorList:string[] =[]
+  checked: boolean  = true
+  sidebarState="opened"
   showDropdown = false;
   constructor(private store:Store) { }
 
@@ -67,5 +69,12 @@ export class DataService {
     ).subscribe(boards=>{
       this.selectBoard(boards[0])
     })
+  }
+
+  toggleSidebar(){
+    if (window.innerWidth < 768) console.log('moible-sidebar') 
+    this.sidebarState ==='opened'
+    ? this.sidebarState = 'closed'
+    : this.sidebarState = 'opened'; 
   }
 }

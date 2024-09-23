@@ -1,15 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { MenuModule } from 'primeng/menu';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskModalComponent } from '../modals/task-modal/task-modal.component';
 import { DataService } from '../../shared/services/data/data.service';
 import { Store } from '@ngrx/store';
-import { deleteBoard } from '../../shared/state/board.actions';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { IBoard, ITask } from '../../shared/models/board';
 import { CreateBoardComponent } from '../modals/create-board/create-board.component';
 import { ConfirmDeleteComponent } from '../modals/confirm-delete/confirm-delete.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -19,10 +21,15 @@ import { ConfirmDeleteComponent } from '../modals/confirm-delete/confirm-delete.
   styleUrl: './header.component.sass'
 })
 
-export class HeaderComponent {
-constructor(public dataService:DataService,public dialog: MatDialog, private store: Store){
-}
+export class HeaderComponent implements OnInit {
+  private destroy$ = new Subject<void>();
+constructor(
+  public dataService:DataService,
+  public dialog: MatDialog, 
+  private store: Store){}
 
+  ngOnInit() {
+  }
   toggleMenu() {
     console.log(this.dataService.showDropdown)
     this.dataService.showDropdown = !this.dataService.showDropdown
@@ -64,13 +71,16 @@ constructor(public dataService:DataService,public dialog: MatDialog, private sto
       }
     )
   }
-  logoImg(){
-    return 'assets/images/logo.png';
-    // <img src="../../../assets/icons/logo-dark.svg" alt="" srcset="">
-    // <img src="../../../assets/icons/logo-light.svg" alt="" srcset="">
-    // <img src="../../../assets/icons/logo-mobile.svg" alt="" srcset="">
-  }
+  
   deleteBoard(){
     this.dialog.open(ConfirmDeleteComponent);
+  }
+
+  logoSrc(){
+    if (window.innerWidth >= 768) {
+      return this.dataService.checked ? 'assets/icons/logo-light.svg' : 'assets/icons/logo-dark.svg';
+    } else {
+      return 'assets/icons/logo-mobile.svg';
+    }
   }
 }
