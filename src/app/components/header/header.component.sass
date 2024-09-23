@@ -1,7 +1,7 @@
+@use './../../../partials/variables' as *
 .header-parent
-    display: grid
-    grid-template-columns: 18.8rem 1fr
-    grid-template-rows: 1fr
+    display: flex
+    align-items: center
     height: 100%
     background-color: var(--main-bg)
     color: var(--main-color)
@@ -13,12 +13,25 @@
         margin-left: 2rem
         border-right: 1px solid var(--border-line-color)
     .div2 
-        grid-area: 1 / 2 / 2 / 3
         display: flex
+        width: -webkit-fill-available
         align-items: center
         justify-content: space-between
         height: 100%
         padding: 0 2rem
+        
+        .store-name-group
+            display: flex
+            align-items: center
+            .store-name
+                font-size: $storeNameFont
+
+            .mobile-menu
+                color: $clr-primary
+                transition: transform 0.3s ease-in-out
+
+            .rotate-up
+                transform: rotate(180deg)
 
         .actions
             position: relative
@@ -43,4 +56,16 @@
                 border: 1px gray
                 box-shadow: 0 0 8px #364e7e1a
             
-            
+
+
+@media only screen and (min-width: 768px) 
+    .header-parent
+        display: grid
+        grid-template-columns: 18.8rem 1fr
+        grid-template-rows: 1fr
+
+        .div1
+            grid-area: 1 / 1 / 2 / 2
+
+        .div2 
+            grid-area: 1 / 2 / 2 / 3

@@ -1,9 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@use './partials/mixins' as *
 @import './partials/theme'
-body
-    margin: 0
-    height: 100vh
-    font-family: "Plus Jakarta Sans", sans-serif
+
+:root
     .dark-theme 
         @include theme(dark)
   
@@ -12,11 +11,34 @@ body
         .toggler 
             left: 23px !important
     
+body
+    margin: 0
+    height: 100vh
+    font-family: "Plus Jakarta Sans", sans-serif
+    font-size: 15px
+
     .show
         display: flex !important
 
     .hide
         display: none !important
+    
+    .modal-form-container
+        background-color: var(--card-bg)
+    
+    .btn
+        @include responsive-button(768px)
+
+    .btn-primary
+        background-color: #635fc7
+        color: #fff
+        &:hover
+            background: #A8A4FF
+            cursor: pointer
+
+    .btn-secondary
+        background-color: var(--btn-secondary-bg)
+        color: #635fc7
 
 @media only screen and (min-width: 768px)
     #toggleModal
@@ -27,16 +49,7 @@ body
         cursor: pointer
         color: gray
         width: 3rem
-    .btn-primary
-        background-color: #635fc7
-        color: #fff
-        &:hover
-            background: #A8A4FF
-            cursor: pointer
 
-    .btn-secondary
-        background-color: #f0effa
-        color: #635fc7
 
     .btn-sm
         padding: 0.5rem 1rem
@@ -45,24 +58,6 @@ body
     .btn-lg
         padding: 0.75rem 1rem
 
-    .btn
-        display: flex
-        justify-content: center
-        width: 100%
-        height: auto
-        border-radius: 24px
-        border: none
-        align-items: center
-        font-size: .9375rem
-        font-weight: 700
-        transition: all .2s ease
-        
-
-        .add-icon
-            margin-right:0
-            display: flex
-            justify-content: center
-            align-items: center
     .card
         display: flex
         text-align: left

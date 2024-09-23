@@ -1,16 +1,32 @@
-@mixin theme($theme) 
-  @if $theme == light 
+@mixin theme($theme)
+  @if $theme == light
     --header-color: #FFFFFF
     --main-bg: #FFFFFF
     --board-bg: #f4f7fd
-    --card-bg:#FFFFFF
+    --card-bg: #FFFFFF
     --main-color: #2F4C58
     --border-line-color: #e4ebfa
-  
-  @else if $theme == dark 
+    --btn-secondary-bg: #f0effa
+
+    .header-parent 
+      .logo-dark
+        display: none
+
+      .logo-light
+        display: inline
+
+  @else if $theme == dark
     --header-color: #FFFFFF
     --main-bg: #2B2C37
     --board-bg: #20212C
-    --card-bg:#2b2c37
+    --card-bg: #2b2c37
     --main-color: #FFFFFF
     --border-line-color: #3e3f4e
+    --btn-secondary-bg: #FFFFFF
+
+    .header-parent
+      .logo-dark
+        display: inline
+
+      .logo-light
+        display: none
