@@ -23,6 +23,7 @@ import { ITask } from '../../../shared/models/board';
 export class TaskModalComponent {
   taskForm: FormGroup;
   edit = false;
+  formValid: boolean = true;
   data = inject(MAT_DIALOG_DATA);
   constructor(private fb: FormBuilder, private store: Store, public dataService: DataService,public dialogRef: MatDialogRef<TaskModalComponent>) {
     console.log(this.data)
@@ -53,8 +54,8 @@ export class TaskModalComponent {
   }
   createTask(){
     const currentBoard = this.dataService.selectedBoard.getValue();
-
-    if (currentBoard) {
+    this.formValid = this.taskForm.valid
+    if (currentBoard && this.taskForm.valid) {
       const selectedColumnIndex = currentBoard.columns.findIndex(c => c.id === this.taskForm.value.status);
     
       if (selectedColumnIndex > -1) {

@@ -5,7 +5,7 @@
         <label for="boardName" class="input-group-label">Name</label>
         <input id="boardName" formControlName="name" type="text" class="input-text"/>
         @if (boardForm.get('name')?.errors && boardForm.get('name')?.touched) {
-          <span>error</span>
+          <span class="input-validation-error">can't be empty</span>
         }
       </div>
       <div formArrayName="columns" class="columns">
@@ -13,7 +13,12 @@
         <div class="column-list">
           @for (column of columns.controls; track $index) {
             <div class="column-input-group" [formGroupName]="$index">
-            <input formControlName="name" placeholder=""/>
+              <div class="input">
+                <input formControlName="name" placeholder=""/>
+                @if (dataService.isFieldInvalid($index, columns, 'name')) {
+                  <span class="input-validation-error">can't be empty</span>
+                }
+              </div>
             <span><img (click)="removeColumn($index)" src="assets/icons/icon-cross.svg" alt="" srcset=""></span>
           </div>
           }
