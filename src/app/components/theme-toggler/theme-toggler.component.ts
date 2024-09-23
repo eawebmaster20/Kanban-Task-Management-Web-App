@@ -9,7 +9,6 @@ import { DataService } from '../../shared/services/data/data.service';
   styleUrl: './theme-toggler.component.sass'
 })
 export class ThemeTogglerComponent implements OnInit {
-  // checked: boolean  = true
   constructor(public dataService:DataService){}
   toggleTheme(){
     this.dataService.checked = !this.dataService.checked;

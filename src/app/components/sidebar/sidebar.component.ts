@@ -34,7 +34,9 @@ export class SidebarComponent {
 
   openDialog() {
     console.log('dialog open')
-    const dialogRef = this.dialog.open(CreateBoardComponent);
+    const dialogRef = this.dialog.open(CreateBoardComponent,{
+      panelClass: this.dataService.checked ? 'dark-card': 'light-card'
+    });
     dialogRef.afterClosed().subscribe({
       next: (res) =>  {
         if(!res.update){

@@ -1,5 +1,6 @@
-<form [formGroup]="taskForm" (ngSubmit)="createTask()">
-  <div class="modal-form-container">
+<form [formGroup]="taskForm" (ngSubmit)="createTask()"
+class="modal-container">
+  <div class="modal-form-container" [class]="dataService.checked?'dark-theme':'light-theme'">
     <h2>Add New Task</h2>
     <div class="form-input-group">
       <label class="input-group-label" for="title">Title</label>

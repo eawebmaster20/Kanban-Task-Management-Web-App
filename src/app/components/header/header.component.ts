@@ -37,7 +37,8 @@ constructor(
   openBoardDialog(board?:IBoard) {
     console.log('dialog open')
     const dialogRef = this.dialog.open(CreateBoardComponent,{
-      data:board
+      data:board,
+      panelClass: this.dataService.checked ? 'dark-card': 'light-card'
     });
     dialogRef.afterClosed().subscribe({
       next: (res) =>  {
@@ -53,7 +54,8 @@ constructor(
   openTaskDialog(task?:ITask) {
     console.log('dialog open')
     const dialogRef = this.dialog.open(TaskModalComponent,{
-      data:task
+      data:task,
+      panelClass: this.dataService.checked ? 'dark-card': 'light-card'
     });
     dialogRef.afterClosed().subscribe(
       {

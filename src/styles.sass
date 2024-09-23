@@ -1,44 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
 @use './partials/mixins' as *
+@use './partials/variables' as *
+@use '@angular/cdk' as cdk
+
+@include cdk.overlay()
 @import './partials/theme'
 
+
 :root
-    .dark-theme 
-        @include theme(dark)
   
-    .light-theme 
-        @include theme(light)
-        .toggler 
-            left: 23px !important
+    body
+        margin: 0
+        height: 100vh
+        font-family: "Plus Jakarta Sans", sans-serif
+        font-size: 15px
+        .light-card
+            background-color: $card-bg-light !important
+            color: $card-clr-light !important
+            border-radius: 4px
+
+        .dark-card
+            background-color: $card-bg-dark !important
+            color: $card-clr-dark !important
+            border-radius: 4px
+
+        .dark-theme 
+            @include theme(dark)
     
-body
-    margin: 0
-    height: 100vh
-    font-family: "Plus Jakarta Sans", sans-serif
-    font-size: 15px
+        .light-theme 
+            @include theme(light)
+            .toggler 
+                left: 23px !important
 
-    .show
-        display: flex !important
+        .show
+            display: flex !important
 
-    .hide
-        display: none !important
-    
-    .modal-form-container
-        background-color: var(--card-bg)
-    
-    .btn
-        @include responsive-button(768px)
+        .hide
+            display: none !important
+        
+        
+        .btn
+            @include responsive-button(768px)
 
-    .btn-primary
-        background-color: #635fc7
-        color: #fff
-        &:hover
-            background: #A8A4FF
-            cursor: pointer
+        .btn-primary
+            background-color: #635fc7
+            color: #fff
+            &:hover
+                background: #A8A4FF
+                cursor: pointer
 
-    .btn-secondary
-        background-color: var(--btn-secondary-bg)
-        color: #635fc7
+        .btn-secondary
+            background-color: var(--btn-secondary-bg)
+            color: #635fc7
 
 @media only screen and (min-width: 768px)
     #toggleModal
@@ -285,7 +298,7 @@ body
 
         input
             background: transparent
-            color: black
+            color: var(--card-clr)
             font-size: .8125rem
             padding: .5rem 1rem
             border-radius: 4px
@@ -298,12 +311,12 @@ body
         #description
             resize: none
             background: transparent
-            color: black
             font-size: .8125rem
             padding: .5rem 1rem
             border-radius: 4px
             border: 2px solid rgba(130, 143, 163, .4)
             transition: border .2s ease
+            color: var(--card-clr)
             &:focus
                 border: 2px solid #635FC7 !important
                 outline: none
