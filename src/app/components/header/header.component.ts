@@ -24,21 +24,11 @@ import { Subject, takeUntil } from 'rxjs';
 export class HeaderComponent implements OnInit {
   private destroy$ = new Subject<void>();
 constructor(
-  private breakpointObserver: BreakpointObserver,
   public dataService:DataService,
   public dialog: MatDialog, 
   private store: Store){}
 
   ngOnInit() {
-    this.logoImg();
-
-    this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.Tablet])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(result => {
-        if (result.matches) {
-          this.logoImg();
-        }
-      });
   }
   toggleMenu() {
     console.log(this.dataService.showDropdown)
@@ -81,16 +71,16 @@ constructor(
       }
     )
   }
-  logoImg(url?:string){
-    if (this.breakpointObserver.isMatched([Breakpoints.Small, Breakpoints.XSmall])) {
-      return 'assets/icons/logo-mobile.svg';
-    } else if (this.breakpointObserver.isMatched(Breakpoints.Tablet)) {
-      return this.dataService.checked ? 'assets/icons/logo-light.svg' : 'assets/icons/logo-dark.svg';
-    } else {
-      return 'assets/icons/logo-desktop.svg';
-    }
-  }
+  
   deleteBoard(){
     this.dialog.open(ConfirmDeleteComponent);
+  }
+
+  logoSrc(){
+    if (window.innerWidth >= 768) {
+      return this.dataService.checked ? 'assets/icons/logo-light.svg' : 'assets/icons/logo-dark.svg';
+    } else {
+      return 'assets/icons/logo-mobile.svg';
+    }
   }
 }
