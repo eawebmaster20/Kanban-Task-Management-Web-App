@@ -1,6 +1,6 @@
 <form class="modal-container" [formGroup]="boardForm" (ngSubmit)="onSubmit()">
     <div class="modal-form-container">
-      <h2 class="form-title">Add New Board</h2>
+      <h2 class="form-title">Add New {{!!data?.name?.length?'Column':'Board'}}</h2>
       <div class="form-input-group">
         <label for="boardName" class="input-group-label">Name</label>
         <input id="boardName" formControlName="name" type="text" class="input-text"/>

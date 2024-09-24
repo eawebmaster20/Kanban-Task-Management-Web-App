@@ -23,10 +23,11 @@ export class CreateBoardComponent {
   public dataService: DataService,
     private fb: FormBuilder, 
     private store:Store, 
-    public dialogRef: MatDialogRef<CreateBoardComponent>) {
+    public dialogRef: MatDialogRef<CreateBoardComponent>
+  ) {
     this.boardForm = this.fb.group({
       id:uuidv4(),
-      name: ['', Validators.required],
+      name: [{value:'',disabled: this.shouldDisableNameField()}, Validators.required],
       columns: this.fb.array([],atLeastOneColumnValidator()) 
     });
     const columnForm = this.fb.group({
@@ -34,7 +35,6 @@ export class CreateBoardComponent {
       name: ['', Validators.required], 
       tasks: this.fb.array([]) 
     });
-    
     this.data?.name?.length ? (this.populateForm(this.data), this.edit=true):this.columns.push(columnForm)
   }
 
@@ -65,7 +65,9 @@ export class CreateBoardComponent {
       this.boardForm.reset();
     }
   }
-
+  shouldDisableNameField(): boolean {
+    return !!this.data?.name?.length;
+  }
   populateForm(data: any) {
     
     this.boardForm.patchValue({

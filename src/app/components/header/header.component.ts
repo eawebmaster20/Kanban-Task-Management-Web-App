@@ -12,6 +12,7 @@ import { IBoard, ITask } from '../../shared/models/board';
 import { CreateBoardComponent } from '../modals/create-board/create-board.component';
 import { ConfirmDeleteComponent } from '../modals/confirm-delete/confirm-delete.component';
 import { Subject, takeUntil } from 'rxjs';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-header',
@@ -73,7 +74,13 @@ constructor(
       }
     )
   }
-  
+  // openTaskDialog(task?:ITask){
+  //   this.dialog.open(SidebarComponent, {
+  //     position: {
+  //       top: '80px',
+  //     },
+  //   });
+  // }
   deleteBoard(){
     this.dialog.open(ConfirmDeleteComponent);
   }
