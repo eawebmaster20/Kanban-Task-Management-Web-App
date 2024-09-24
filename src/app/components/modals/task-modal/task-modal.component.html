@@ -5,6 +5,9 @@ class="modal-container">
     <div class="form-input-group">
       <label class="input-group-label" for="title">Title</label>
       <input class="input-text" id="title" formControlName="title"/>
+      @if (taskForm.get('title')?.errors && taskForm.get('title')?.touched) {
+        <span class="input-validation-error">can't be empty</span>
+      }
     </div>
     <div class="form-input-group">
       <label class="input-group-label" for="description">Description</label>
@@ -16,11 +19,12 @@ class="modal-container">
       <div class="column-list">
         @for (subtask of subtasks.controls; track $index) {
             <div class="column-input-group" [formGroupName]="$index">
-              <input id="subtask-title" formControlName="title"/>
-              <!-- <label>
-                <input type="checkbox" formControlName="isCompleted" />
-                Completed
-              </label> -->
+              <div class="input">
+                <input id="subtask-title" formControlName="title"/>
+                @if (dataService.isFieldInvalid($index, subtasks, 'title')) {
+                  <span class="input-validation-error">can't be empty</span>
+                }
+              </div>
               <span><img (click)="removeSubtask($index)" src="assets/icons/icon-cross.svg" alt="" srcset=""></span>
             </div>
           }
@@ -38,4 +42,8 @@ class="modal-container">
       </mat-form-field>
     <button class="btn btn-sm btn-primary" type="submit">{{edit? 'Save Changes':'Create Task'}}</button>
   </div>
+  
+  @if (!formValid) {
+    <span class="input-validation-error">please fill all required fields</span>
+  }
 </form>

@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { v4 as uuidv4 } from 'uuid'
 import { atLeastOneColumnValidator } from '../../../shared/utils/custom-form-validators/atleast-one-column';
 import { Store } from '@ngrx/store';
+import { DataService } from '../../../shared/services/data/data.service';
 
 @Component({
   selector: 'app-create-board',
@@ -18,10 +19,15 @@ export class CreateBoardComponent {
   boardForm: FormGroup;
   data = inject(MAT_DIALOG_DATA);
   edit = false;
-  constructor(private fb: FormBuilder, private store:Store, public dialogRef: MatDialogRef<CreateBoardComponent>) {
+  constructor(
+  public dataService: DataService,
+    private fb: FormBuilder, 
+    private store:Store, 
+    public dialogRef: MatDialogRef<CreateBoardComponent>
+  ) {
     this.boardForm = this.fb.group({
       id:uuidv4(),
-      name: ['', Validators.required],
+      name: [{value:'',disabled: this.shouldDisableNameField()}, Validators.required],
       columns: this.fb.array([],atLeastOneColumnValidator()) 
     });
     const columnForm = this.fb.group({
@@ -29,7 +35,6 @@ export class CreateBoardComponent {
       name: ['', Validators.required], 
       tasks: this.fb.array([]) 
     });
-    
     this.data?.name?.length ? (this.populateForm(this.data), this.edit=true):this.columns.push(columnForm)
   }
 
@@ -54,14 +59,15 @@ export class CreateBoardComponent {
   }
 
  
-  
   onSubmit(): void {
     if (this.boardForm.valid) {
       this.dialogRef.close({data:this.boardForm.value, update:this.edit});
       this.boardForm.reset();
     }
   }
-
+  shouldDisableNameField(): boolean {
+    return !!this.data?.name?.length;
+  }
   populateForm(data: any) {
     
     this.boardForm.patchValue({

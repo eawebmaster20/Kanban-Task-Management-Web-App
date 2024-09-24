@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
-import { IBoard } from '../../models/board';
+import { IBoard, IColumn } from '../../models/board';
 import { Store } from '@ngrx/store';
 import { getRandomColor } from '../../utils/colorGenerator';
 import { addBoard, deleteBoard, selectBoard, updateBoard } from '../../state/board.actions';
@@ -76,5 +76,11 @@ export class DataService {
     this.sidebarState ==='opened'
     ? this.sidebarState = 'closed'
     : this.sidebarState = 'opened'; 
+  }
+
+  
+  isFieldInvalid(index: number, columns:any, formCtrName:string): boolean {
+    const control = columns.at(index).get(formCtrName);
+    return control!.invalid && control!.touched;
   }
 }

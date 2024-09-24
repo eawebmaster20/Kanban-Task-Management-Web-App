@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DataService } from '../../shared/services/data/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsModalComponent } from '../modals/task-details-modal/task-details-modal.component';
+import { CreateBoardComponent } from '../modals/create-board/create-board.component';
 
 @Component({
   selector: 'app-board-renderer',
@@ -31,8 +32,24 @@ export class BoardRendererComponent implements OnInit {
   openTaskDetailsDialog(task:ITask){
     this.dialog.open(TaskDetailsModalComponent,{
       width:"480px",
-      data:task
+      data:task,
+      panelClass: this.dataService.checked ? 'task-details-modal-light': 'task-details-modal-dark'
     })
+  }
+  openDialog() {
+    console.log('dialog open')
+    const dialogRef = this.dialog.open(CreateBoardComponent,{
+      data:this.dataService.selectedBoard.getValue(),
+      panelClass: this.dataService.checked ? 'dark-card': 'light-card'
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (res) =>  {
+        if(!res.update){
+          this.dataService.createBoard(res.data)
+        }
+      },
+      error: (err) => console.error('Error:', err)
+    });
   }
   dropStore(event: CdkDragDrop<ITask[]>) {
     let tempBoard = this.dataService.selectedBoard.getValue();

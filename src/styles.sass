@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @use './partials/mixins' as *
+@use './partials/details' as *
 @use './partials/variables' as *
 @use '@angular/cdk' as cdk
-
 @include cdk.overlay()
 @import './partials/theme'
 
@@ -15,13 +15,13 @@
         font-family: "Plus Jakarta Sans", sans-serif
         font-size: 15px
         .light-card
-            background-color: $card-bg-light !important
-            color: $card-clr-light !important
+            background-color: $card-bg-light 
+            color: $card-clr-light 
             border-radius: 4px
 
         .dark-card
-            background-color: $card-bg-dark !important
-            color: $card-clr-dark !important
+            background-color: $card-bg-dark 
+            color: $card-clr-dark 
             border-radius: 4px
 
         .dark-theme 
@@ -52,8 +52,23 @@
         .btn-secondary
             background-color: var(--btn-secondary-bg)
             color: #635fc7
+        .input-validation-error
+            position: absolute
+            display: flex
+            bottom: 0.5rem
+            right: 1rem
+            align-items: center
+            font-size: .75rem
+            font-weight: 700
+            color: #ea5555
 
-@media only screen and (min-width: 768px)
+        .task-details-modal-light
+            @include task-detail(light)
+
+        .task-details-modal-dark
+            @include task-detail(dark)
+
+
     #toggleModal
         display: flex
         align-items: center
@@ -71,6 +86,7 @@
     .btn-lg
         padding: 0.75rem 1rem
 
+    
     .card
         display: flex
         text-align: left
@@ -84,6 +100,8 @@
         padding: 1.5rem 1rem
         margin-bottom: 1.5rem
         transition: filter .2s ease
+        &:hover
+            background: darken($card-bg-light, 20%)
 
         .card-title
             font-size: .9375rem
@@ -300,6 +318,7 @@
             background: transparent
             color: var(--card-clr)
             font-size: .8125rem
+            width: -webkit-fill-available
             padding: .5rem 1rem
             border-radius: 4px
             border: 2px solid rgba(130, 143, 163, .4)
@@ -329,6 +348,7 @@
             display: flex
             flex-direction: column
             width: 100%
+            position: relative
             margin-bottom: 1rem
 
             .input-group-label
@@ -346,6 +366,10 @@
                 gap: 1rem
                 justify-content: space-between
                 align-items: center
+
+                .input
+                    position: relative
+                    width: 100%
 
 
     
