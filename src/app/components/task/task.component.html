@@ -1,0 +1,8 @@
+<div class="task" (click)="showTaskDetail()">
+  <h3>{{ task.title }}</h3>
+  <small class="text-secondary">
+    {{ getCompletedSubtasks(task.subtasks) }} of
+    {{ task.subtasks.length }} subtasks
+  </small>
+</div>
+
